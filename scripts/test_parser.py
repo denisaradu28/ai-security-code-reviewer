@@ -1,13 +1,12 @@
 from src.agents.parser_agent import CodeParserAgent
+from pathlib import Path
 
-
-REPO_URL = "https://github.com/pallets/flask"
+REPO_URL = "https://github.com/psf/requests"
 
 
 parser = CodeParserAgent()
 
 repository = parser.parse(REPO_URL)
-
 
 print()
 print("==========================")
@@ -45,3 +44,9 @@ for file in repository.files[:3]:
 
     print()
     print(file.model_dump_json(indent=2))
+
+output_path = Path("data/review_example.json")
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+output_path.write_text(repository.model_dump_json(indent=2), encoding="utf-8")
+print(f"\nSaved parser output to: {output_path}")

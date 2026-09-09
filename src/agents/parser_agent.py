@@ -43,7 +43,7 @@ class CodeParserAgent:
         for file_path in code_files:
 
             try:
-                file_dto = self._parse_file(file_path=file_path, repo_path=local_path)
+                file_dto = self._parse_file(file_path=file_path, repo_path=local_path, dependecies=repository_dependencies)
                 if file_dto is None:
                     continue
                 parsed_files.append(file_dto)
@@ -63,7 +63,7 @@ class CodeParserAgent:
 
         return repository
 
-    def _parse_file(self, file_path:Path, repo_path:Path) -> CodeFileDTO | None:
+    def _parse_file(self, file_path:Path, repo_path:Path, dependecies: list[str]) -> CodeFileDTO | None:
         content = read_file(file_path)
 
         if content is None:
@@ -88,7 +88,7 @@ class CodeParserAgent:
             lines_of_code=lines_of_code,
             functions=functions,
             imports=imports,
-            dependencies=[],
+            dependencies=dependecies,
         )
 
     def _parse_python(self, content:str) -> tuple[list[FunctionDTO], list[str]]:
