@@ -90,7 +90,7 @@ class DependencyRiskDTO(BaseModel):
 
 # PIPELINES DTOs
 
-class RetrivalResultDTO(BaseModel):
+class RetrievalResultDTO(BaseModel):
     text: str
     source: str
     score: float
